@@ -1,18 +1,18 @@
-import React from "react";
 import Head from "next/head";
+import React from "react";
 
-const HomePage = () => {
+const AboutPage = () => {
   return (
     <>
       <Head>
-        <title>My Blog</title>
+        <title>About</title>
         <meta name='description' value='This is my blog' />
       </Head>
       <main>
-        <h1>My Blog</h1>
+        <h1>About</h1>
       </main>
     </>
   );
 };
 
-export default HomePage;
+export default AboutPage;
