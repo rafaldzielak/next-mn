@@ -17,6 +17,18 @@ const NavBar = ({ children }) => {
             </Link>
           </li>
         </ul>
+        <style jsx>{`
+          ul {
+            list-style: none;
+            padding: 0;
+          }
+          li {
+            display: inline;
+          }
+          li:not(:first-child) {
+            margin-left: 0.75rem;
+          }
+        `}</style>
       </nav>
     </>
   );
