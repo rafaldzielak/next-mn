@@ -1,5 +1,6 @@
 import React from "react";
 import Head from "next/head";
+import Link from "next/link";
 
 const HomePage = () => {
   return (
@@ -10,6 +11,13 @@ const HomePage = () => {
       </Head>
       <main>
         <h1>My Blog</h1>
+        <ul>
+          <li>
+            <Link href='/posts/first-post'>
+              <a>First post</a>
+            </Link>
+          </li>
+        </ul>
       </main>
     </>
   );
