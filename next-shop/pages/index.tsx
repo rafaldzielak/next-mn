@@ -28,7 +28,10 @@ const Home: FC<Props> = ({ products }) => {
 
 export const getStaticProps: GetStaticProps<Props> = async (context) => {
   const products = await getProducts();
-  return { props: { products } };
+  return {
+    props: { products },
+    revalidate: 5 * 60, //seconds
+  };
 };
 
 export default Home;
