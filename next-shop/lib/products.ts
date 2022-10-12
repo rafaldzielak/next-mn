@@ -1,12 +1,15 @@
+import { fetchJson } from "./api";
+
 export interface Product {
   id: number;
   title: string;
   description: string;
 }
 
+const CMS_URL = "http://localhost:1337";
+
 export const getProducts = async (): Promise<Product[]> => {
-  const response = await fetch("http://localhost:1337/products");
-  const products = await response.json();
+  const products = await fetchJson(`${CMS_URL}/products`);
   return products.map(stripProduct);
 };
 
@@ -19,7 +22,6 @@ export const stripProduct = (product: any): Product => {
 };
 
 export const getProduct = async (id: string): Promise<Product> => {
-  const response = await fetch(`http://localhost:1337/products/${id}`);
-  const product = await response.json();
+  const product = await fetchJson(`${CMS_URL}/products/${id}`);
   return stripProduct(product);
 };

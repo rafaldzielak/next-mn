@@ -3,6 +3,7 @@ import Head from "next/head";
 import { ParsedUrlQuery } from "querystring";
 import { FC } from "react";
 import Title from "../../components/Title";
+import { ApiError } from "../../lib/api";
 import { getProducts, getProduct, Product } from "../../lib/products";
 
 type ProductPageParams = ParsedUrlQuery & {
@@ -28,11 +29,16 @@ const Product: FC<ProductPageProps> = ({ product }) => {
 };
 
 export const getStaticProps: GetStaticProps<ProductPageProps, ProductPageParams> = async (context) => {
-  const product = await getProduct(context.params.id);
-  return {
-    props: { product },
-    revalidate: 5 * 60,
-  };
+  try {
+    const product = await getProduct(context.params.id);
+    return {
+      props: { product },
+      revalidate: 5 * 60,
+    };
+  } catch (error) {
+    if (error instanceof ApiError && error.status === 404) return { notFound: true };
+    throw error;
+  }
 };
 
 export const getStaticPaths: GetStaticPaths<ProductPageParams> = async () => {
