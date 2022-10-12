@@ -39,7 +39,7 @@ export const getStaticPaths: GetStaticPaths<ProductPageParams> = async () => {
   const products = await getProducts();
   return {
     paths: products.map((product) => ({ params: { id: product.id.toString() } })),
-    fallback: false,
+    fallback: "blocking", // will generate new page for unknown id and return to client
   };
 };
 
