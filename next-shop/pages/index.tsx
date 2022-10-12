@@ -1,5 +1,6 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import { FC } from "react";
 import Title from "../components/Title";
 import { getProducts, Product } from "../lib/products";
@@ -19,7 +20,11 @@ const Home: FC<Props> = ({ products }) => {
       </main>
       <ul>
         {products.map((product) => (
-          <li key={product.id}>{product.title}</li>
+          <li key={product.id}>
+            <Link href={`/products/${product.id}`}>
+              <a>{product.title}</a>
+            </Link>
+          </li>
         ))}
       </ul>
     </>
