@@ -3,6 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { FC } from "react";
 import Title from "../components/Title";
+import { REVALIDATE_SECONDS } from "../lib/api";
 import { getProducts, Product } from "../lib/products";
 
 type Props = {
@@ -35,7 +36,7 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
   const products = await getProducts();
   return {
     props: { products },
-    revalidate: 5 * 60, //seconds
+    revalidate: REVALIDATE_SECONDS,
   };
 };
 

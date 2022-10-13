@@ -6,7 +6,7 @@ export interface Product {
   description: string;
 }
 
-const CMS_URL = "http://localhost:1337";
+const CMS_URL = process.env.CMS_URL;
 
 export const getProducts = async (): Promise<Product[]> => {
   const products = await fetchJson(`${CMS_URL}/products`);

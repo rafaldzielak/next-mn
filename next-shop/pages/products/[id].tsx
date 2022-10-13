@@ -3,7 +3,7 @@ import Head from "next/head";
 import { ParsedUrlQuery } from "querystring";
 import { FC } from "react";
 import Title from "../../components/Title";
-import { ApiError } from "../../lib/api";
+import { ApiError, REVALIDATE_SECONDS } from "../../lib/api";
 import { getProducts, getProduct, Product } from "../../lib/products";
 
 type ProductPageParams = ParsedUrlQuery & {
@@ -33,7 +33,7 @@ export const getStaticProps: GetStaticProps<ProductPageProps, ProductPageParams>
     const product = await getProduct(context.params.id);
     return {
       props: { product },
-      revalidate: 5 * 60,
+      revalidate: REVALIDATE_SECONDS,
     };
   } catch (error) {
     if (error instanceof ApiError && error.status === 404) return { notFound: true };

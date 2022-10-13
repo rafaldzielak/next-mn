@@ -13,3 +13,5 @@ export const fetchJson = async (url: string) => {
   if (!response.ok) throw new ApiError(url, response.status);
   return await response.json();
 };
+
+export const REVALIDATE_SECONDS = Number(process.env.REVALIDATE_SECONDS);
