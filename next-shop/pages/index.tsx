@@ -1,9 +1,7 @@
 import { GetStaticProps } from "next";
-import Head from "next/head";
-import Link from "next/link";
 import { FC } from "react";
+import PageWrapper from "../components/PageWrapper";
 import ProductCard from "../components/ProductCard";
-import Title from "../components/Title";
 import { REVALIDATE_SECONDS } from "../lib/api";
 import { getProducts, Product } from "../lib/products";
 
@@ -13,13 +11,7 @@ type Props = {
 
 const Home: FC<Props> = ({ products }) => {
   return (
-    <>
-      <Head>
-        <title>Next Shop</title>
-      </Head>
-      <main className='px-6 py-4'>
-        <Title>Next shop</Title>
-      </main>
+    <PageWrapper title='Indoor Plants'>
       <ul className='grid grid-cols-1 lg:grid-cols-3 gap-4'>
         {products.map((product) => (
           <li key={product.id}>
@@ -27,7 +19,7 @@ const Home: FC<Props> = ({ products }) => {
           </li>
         ))}
       </ul>
-    </>
+    </PageWrapper>
   );
 };
 

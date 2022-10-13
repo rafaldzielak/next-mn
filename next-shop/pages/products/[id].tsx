@@ -1,9 +1,8 @@
 import { GetStaticPaths, GetStaticProps } from "next";
-import Head from "next/head";
 import Image from "next/image";
 import { ParsedUrlQuery } from "querystring";
 import { FC } from "react";
-import Title from "../../components/Title";
+import PageWrapper from "../../components/PageWrapper";
 import { ApiError, REVALIDATE_SECONDS } from "../../lib/api";
 import { getProducts, getProduct, Product } from "../../lib/products";
 
@@ -17,23 +16,17 @@ type ProductPageProps = {
 
 const Product: FC<ProductPageProps> = ({ product }) => {
   return (
-    <>
-      <Head>
-        <title>Next Shop</title>
-      </Head>
-      <main className='px-6 py-4'>
-        <Title>{product.title}</Title>
-        <div className='flex flex-col lg:flex-row'>
-          <div>
-            <Image src={product.pictureUrl} alt='' width={640} height={480} />
-          </div>
-          <div>
-            <p className='flex-1 lg:ml-4 text-sm'>{product.description}</p>
-          </div>
-          <p className='text-lg font-bold mt-2'>{product.price}</p>
+    <PageWrapper title={product.title}>
+      <div className='px-6 py-4 flex flex-col lg:flex-row'>
+        <div>
+          <Image src={product.pictureUrl} alt='' width={640} height={480} />
         </div>
-      </main>
-    </>
+        <div>
+          <p className='flex-1 lg:ml-4 text-sm'>{product.description}</p>
+        </div>
+        <p className='text-lg font-bold mt-2'>{product.price}</p>
+      </div>
+    </PageWrapper>
   );
 };
 
