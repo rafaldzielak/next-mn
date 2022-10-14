@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
 import Button from "../components/Button";
 import Field from "../components/Field";
@@ -11,6 +12,8 @@ const SignIn: FC = () => {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const router = useRouter();
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(false);
@@ -21,6 +24,7 @@ const SignIn: FC = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
+      router.push("/");
     } catch (error) {
       setError(true);
     } finally {

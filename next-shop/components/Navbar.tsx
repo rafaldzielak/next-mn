@@ -1,8 +1,17 @@
 import Link from "next/link";
-import React, { FC, PropsWithChildren } from "react";
+import React, { FC, PropsWithChildren, useEffect, useState } from "react";
+import { fetchJson } from "../lib/api";
+import { User } from "../pages/api/user";
 
 const Navbar: FC<PropsWithChildren> = ({ children }) => {
-  const user = { name: "Alice" };
+  const [user, setUser] = useState<User>();
+
+  useEffect(() => {
+    fetchJson("/api/user")
+      .then(setUser)
+      .catch(() => {});
+  }, []);
+
   return (
     <nav className='px-2 py01'>
       <ul className='flex gap-2'>
