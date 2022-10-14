@@ -12,6 +12,8 @@ const Navbar: FC<PropsWithChildren> = ({ children }) => {
       .catch(() => {});
   }, []);
 
+  const handleSignOut = () => fetchJson("/api/logout").then(() => setUser(undefined));
+
   return (
     <nav className='px-2 py01'>
       <ul className='flex gap-2'>
@@ -25,7 +27,7 @@ const Navbar: FC<PropsWithChildren> = ({ children }) => {
           <>
             <li>{user.name}</li>
             <li>
-              <button>Sign out</button>
+              <button onClick={handleSignOut}>Sign out</button>
             </li>
           </>
         ) : (
