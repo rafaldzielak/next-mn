@@ -3,13 +3,20 @@ import Button from "../components/Button";
 import Field from "../components/Field";
 import Input from "../components/Input";
 import PageWrapper from "../components/PageWrapper";
+import { fetchJson } from "../lib/api";
 
 const SignIn: FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const res = await fetchJson("http://localhost:1337/auth/local", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ identifier: email, password }),
+    });
+    console.log(res);
   };
 
   return (
