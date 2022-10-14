@@ -1,18 +1,13 @@
 import Link from "next/link";
-import React, { FC, PropsWithChildren, useEffect, useState } from "react";
+import React, { FC, PropsWithChildren } from "react";
 import { fetchJson } from "../lib/api";
-import { User } from "../pages/api/user";
+import { useUser } from "../hooks/user";
 
-const Navbar: FC<PropsWithChildren> = ({ children }) => {
-  const [user, setUser] = useState<User>();
+const Navbar: FC<PropsWithChildren> = () => {
+  const user = useUser();
 
-  useEffect(() => {
-    fetchJson("/api/user")
-      .then(setUser)
-      .catch(() => {});
-  }, []);
-
-  const handleSignOut = () => fetchJson("/api/logout").then(() => setUser(undefined));
+  const handleSignOut = () => fetchJson("/api/logout");
+  // .then(() => setUser(undefined));
 
   return (
     <nav className='px-2 py01'>
