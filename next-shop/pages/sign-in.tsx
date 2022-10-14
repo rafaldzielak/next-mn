@@ -8,15 +8,24 @@ import { fetchJson } from "../lib/api";
 const SignIn: FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const res = await fetchJson("http://localhost:1337/auth/local", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ identifier: email, password }),
-    });
-    console.log(res);
+    setError(false);
+    setIsLoading(true);
+    try {
+      const res = await fetchJson("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+    } catch (error) {
+      setError(true);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -28,7 +37,8 @@ const SignIn: FC = () => {
         <Field label='Password'>
           <Input type='password' required value={password} onChange={(e) => setPassword(e.target.value)} />
         </Field>
-        <Button type='submit'>Sign In</Button>
+        {error && <p className='text-red-400'>Invalid credentials</p>}
+        {isLoading ? <p>Loading</p> : <Button type='submit'>Sign In</Button>}
       </form>
     </PageWrapper>
   );
