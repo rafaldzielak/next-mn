@@ -1,13 +1,12 @@
 import Link from "next/link";
 import React, { FC, PropsWithChildren } from "react";
-import { fetchJson } from "../lib/api";
 import { useUser } from "../hooks/user/useUser";
+import { useSignOut } from "../hooks/user/useSignOut";
 
 const Navbar: FC<PropsWithChildren> = () => {
   const user = useUser();
 
-  const handleSignOut = () => fetchJson("/api/logout");
-  // .then(() => setUser(undefined));
+  const signOut = useSignOut();
 
   return (
     <nav className='px-2 py01'>
@@ -22,7 +21,7 @@ const Navbar: FC<PropsWithChildren> = () => {
           <>
             <li>{user.name}</li>
             <li>
-              <button onClick={handleSignOut}>Sign out</button>
+              <button onClick={signOut}>Sign out</button>
             </li>
           </>
         ) : (
