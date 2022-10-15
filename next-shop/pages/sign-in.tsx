@@ -4,32 +4,19 @@ import Button from "../components/Button";
 import Field from "../components/Field";
 import Input from "../components/Input";
 import PageWrapper from "../components/PageWrapper";
-import { fetchJson } from "../lib/api";
+import { useSignIn } from "../hooks/useSignIn";
 
 const SignIn: FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
+  const { signIn, isSignInError, isSignInLoading } = useSignIn();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setError(false);
-    setIsLoading(true);
-    try {
-      const res = await fetchJson("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-      router.push("/");
-    } catch (error) {
-      setError(true);
-    } finally {
-      setIsLoading(false);
-    }
+    const isValid = await signIn(email, password);
+    if (isValid) router.push("/");
   };
 
   return (
@@ -41,8 +28,8 @@ const SignIn: FC = () => {
         <Field label='Password'>
           <Input type='password' required value={password} onChange={(e) => setPassword(e.target.value)} />
         </Field>
-        {error && <p className='text-red-400'>Invalid credentials</p>}
-        {isLoading ? <p>Loading</p> : <Button type='submit'>Sign In</Button>}
+        {isSignInError && <p className='text-red-400'>Invalid credentials</p>}
+        {isSignInLoading ? <p>Loading</p> : <Button type='submit'>Sign In</Button>}
       </form>
     </PageWrapper>
   );

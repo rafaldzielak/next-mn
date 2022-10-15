@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { User } from "../pages/api/user";
 
 export const useUser = () => {
-  const query = useQuery(
+  const query = useQuery<User>(
     "user",
     async () => {
       try {
@@ -18,5 +18,5 @@ export const useUser = () => {
     }
   );
 
-  return query.data as User;
+  return query.data;
 };
