@@ -1,6 +1,7 @@
-import { fetchJson } from "../lib/api";
+import { fetchJson } from "../../lib/api";
 import { useMutation, useQueryClient } from "react-query";
-import { User } from "../pages/api/user";
+import { User } from "../../pages/api/user";
+import { USER_QUERY_KEY } from "./consts";
 
 interface SignInVariables {
   email: string;
@@ -26,7 +27,7 @@ export function useSignIn(): UseSignInResult {
     signIn: async (email: string, password: string) => {
       try {
         const user = await mutation.mutateAsync({ email, password });
-        queryClient.setQueryData("user", user);
+        queryClient.setQueryData(USER_QUERY_KEY, user);
         return true;
       } catch (err) {
         return false;

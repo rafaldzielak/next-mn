@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, { FC, PropsWithChildren } from "react";
 import { fetchJson } from "../lib/api";
-import { useUser } from "../hooks/useUser";
+import { useUser } from "../hooks/user/useUser";
 
 const Navbar: FC<PropsWithChildren> = () => {
   const user = useUser();

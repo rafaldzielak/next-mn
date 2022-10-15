@@ -4,7 +4,7 @@ import Button from "../components/Button";
 import Field from "../components/Field";
 import Input from "../components/Input";
 import PageWrapper from "../components/PageWrapper";
-import { useSignIn } from "../hooks/useSignIn";
+import { useSignIn } from "../hooks/user/useSignIn";
 
 const SignIn: FC = () => {
   const [email, setEmail] = useState("");
