@@ -1,12 +1,12 @@
 import { fetchJson } from "./api";
 
-export interface Product {
+export type Product = {
   id: number;
   title: string;
   description: string;
   price: string;
   pictureUrl: string;
-}
+};
 
 const CMS_URL = process.env.CMS_URL;
 

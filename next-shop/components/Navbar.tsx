@@ -19,6 +19,11 @@ const Navbar: FC<PropsWithChildren> = () => {
         <li role='separator' className='flex-1'></li>
         {user ? (
           <>
+            <li>
+              <Link href='/cart'>
+                <a>Cart</a>
+              </Link>
+            </li>
             <li>{user.name}</li>
             <li>
               <button onClick={signOut}>Sign out</button>
