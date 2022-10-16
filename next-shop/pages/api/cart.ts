@@ -22,7 +22,7 @@ const stripCartItem = (cartItem: CartItem): CartItem => {
   };
 };
 
-const handleCart: NextApiHandler<CartItem> = async (req, res) => {
+const handleGetCart: NextApiHandler<CartItem[]> = async (req, res) => {
   const { jwt } = req.cookies;
   if (!jwt) {
     res.status(401).end();
@@ -35,6 +35,39 @@ const handleCart: NextApiHandler<CartItem> = async (req, res) => {
     res.status(200).json(cartItems.map(stripCartItem));
   } catch (error) {
     res.status(401).end();
+  }
+};
+
+const handlePostCart: NextApiHandler = async (req, res) => {
+  const { jwt } = req.cookies;
+  if (!jwt) {
+    res.status(401).end();
+    return;
+  }
+  try {
+    const { productId, quantity } = req.body;
+    await fetchJson(`${CMS_URL}/cart-items`, {
+      headers: { Authorization: `Bearer ${jwt}`, "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify({ product: productId, quantity }),
+    });
+    res.status(200).json({});
+  } catch (error) {
+    res.status(401).end();
+  }
+};
+
+const handleCart: NextApiHandler = async (req, res) => {
+  switch (req.method) {
+    case "GET":
+      handleGetCart(req, res);
+      break;
+    case "POST":
+      handlePostCart(req, res);
+      break;
+
+    default:
+      res.status(406).end();
   }
 };
 
