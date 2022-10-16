@@ -47,12 +47,14 @@ const Field: FC<CartTableProps> = ({ cartItems }) => {
         ))}
       </tbody>
       <tfoot>
-        <th className='px-4 py-2 text-left'>
-          <b>Total</b>
-        </th>
-        <th></th>
-        <th></th>
-        <th className='px-4 py-2 text-right'>${cart.total.toFixed(2)}</th>
+        <tr>
+          <th className='px-4 py-2 text-left'>
+            <b>Total</b>
+          </th>
+          <th></th>
+          <th></th>
+          <th className='px-4 py-2 text-right'>${cart.total.toFixed(2)}</th>
+        </tr>
       </tfoot>
     </table>
   );
