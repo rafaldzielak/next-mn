@@ -17,7 +17,7 @@ const PageWrapper: FC<PageProps> = ({ title, children }) => {
         <Navbar />
       </header>
       <main className='px-6 py-4'>
-        <Title>{title} </Title>
+        <Title>{title}</Title>
       </main>
       {children}
     </>

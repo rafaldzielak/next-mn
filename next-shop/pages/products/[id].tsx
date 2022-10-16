@@ -5,6 +5,7 @@ import { FC } from "react";
 import PageWrapper from "../../components/PageWrapper";
 import { ApiError, REVALIDATE_SECONDS } from "../../lib/api";
 import { getProducts, getProduct, Product } from "../../lib/products";
+import AddToCart from "../../components/AddToCart";
 
 type ProductPageParams = ParsedUrlQuery & {
   id: string;
@@ -26,6 +27,7 @@ const Product: FC<ProductPageProps> = ({ product }) => {
         </div>
         <p className='text-lg font-bold mt-2'>{product.price}</p>
       </div>
+      <AddToCart productId={product.id} />
     </PageWrapper>
   );
 };
