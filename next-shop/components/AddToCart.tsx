@@ -5,11 +5,7 @@ import { useRouter } from "next/router";
 import { fetchJson } from "../lib/api";
 import Button from "./Button";
 import { useUser } from "../hooks/user/useUser";
-
-type AddToCartVariables = {
-  productId: number;
-  quantity: number;
-};
+import { useAddToCart } from "../hooks/cart/useAddToCart";
 
 type AddToCartProps = {
   productId: number;
@@ -20,38 +16,26 @@ const AddToCart: FC<AddToCartProps> = ({ productId }) => {
 
   const router = useRouter();
   const user = useUser();
-
-  const mutation = useMutation<{}, Error, AddToCartVariables>(({ productId, quantity }) =>
-    fetchJson("/api/cart", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ productId, quantity }),
-    })
-  );
+  const { addToCart, isLoading } = useAddToCart();
 
   const handleOnClick = async () => {
-    await mutation.mutateAsync({ productId, quantity: Number(quantity) });
+    await addToCart({ productId, quantity: Number(quantity) });
     router.push("/cart");
   };
 
   if (!user) return null;
+  if (isLoading) return <p>Loading...</p>;
 
   return (
     <>
-      {mutation.isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-          <input
-            type='number'
-            min='1'
-            className='border rounded px-3 py-1 mr-2 w-17 text-right'
-            value={quantity.toString()}
-            onChange={(e) => setQuantity(e.target.value)}
-          />
-          <Button onClick={handleOnClick}>Add to cart</Button>
-        </>
-      )}
+      <input
+        type='number'
+        min='1'
+        className='border rounded px-3 py-1 mr-2 w-17 text-right'
+        value={quantity.toString()}
+        onChange={(e) => setQuantity(e.target.value)}
+      />
+      <Button onClick={handleOnClick}>Add to cart</Button>
     </>
   );
 };
